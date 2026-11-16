@@ -93,6 +93,45 @@ function simple({ kicker, title, points, theme = "cobalt", format = "story" }) {
     h("div", { width: W, fontFamily: "Body", fontWeight: 700, fontSize: isStory ? 38 : 36, color: dark ? C.cobalt : "rgba(255,255,255,0.9)" }, isStory ? "sublet-madrid.netlify.app" : "Link in bio"));
 }
 
+
+// Visual flow (feedback 16/11: fewer words, more diagrams): icon steps joined by a line
+const ICONS = {
+  calendar: "M4 6h16v14H4zM4 10h16M8 3v4M16 3v4",
+  cap: "M2 9l10-5 10 5-10 5zM6 11v5c3 2.5 9 2.5 12 0v-5M22 9v6",
+  lock: "M6 11h12v10H6zM8 11V8a4 4 0 0 1 8 0v3",
+  choose: "M9 12a4 4 0 1 0 0-8a4 4 0 0 0 0 8zM2 21c0-4 3-6 7-6s7 2 7 6M15.5 11l2 2l4.5-4.5",
+  euro: "M17 6.5A6 6 0 1 0 17 17.5M4 10h9M4 14h9",
+  people: "M8 11a3.5 3.5 0 1 0 0-7a3.5 3.5 0 0 0 0 7zM2 20c0-3.5 2.7-5.5 6-5.5s6 2 6 5.5M16 11a3 3 0 1 0 0-6M17 14.5c2.8.3 5 2.2 5 5.5",
+  shield: "M12 3l8 3v6c0 5-3.5 8-8 9c-4.5-1-8-4-8-9V6zM8.5 12l2.5 2.5l4.5-5",
+  eyeoff: "M3 12s3.5-6 9-6s9 6 9 6s-3.5 6-9 6s-9-6-9-6zM12 9.5a2.5 2.5 0 1 1 0 5a2.5 2.5 0 0 1 0-5zM4 4l16 16",
+  house: "M4 11l8-6 8 6M6 10v10h12V10",
+};
+const icon = (name, size, color) => ({ type: "svg", props: { width: size, height: size, viewBox: "0 0 24 24", children: [{ type: "path", props: { d: ICONS[name], fill: "none", stroke: color, "stroke-width": 2, "stroke-linecap": "round", "stroke-linejoin": "round" } }] } });
+function flow({ kicker, title, steps, theme = "cobalt", format = "story" }) {
+  const dark = theme === "paper";
+  const fg = dark ? C.deep : C.white;
+  const isStory = format === "story";
+  const W = isStory ? 888 : 900, H = isStory ? 1370 : 1170;
+  const circle = isStory ? 150 : 112, gapLine = isStory ? 34 : 18;
+  const circleBg = dark ? C.cobalt : C.white, iconCol = dark ? C.white : C.cobalt;
+  const lineCol = dark ? "rgba(35,71,181,0.35)" : "rgba(255,255,255,0.45)";
+  const rows = [];
+  steps.forEach(([ic, label], i) => {
+    if (i > 0) rows.push(h("div", { width: 8, height: gapLine, background: lineCol, marginLeft: circle / 2 - 4, borderRadius: 4 }));
+    rows.push(h("div", { alignItems: "center", gap: isStory ? 44 : 36 },
+      h("div", { width: circle, height: circle, borderRadius: 999, background: circleBg, alignItems: "center", justifyContent: "center", flexShrink: 0 }, icon(ic, circle * 0.52, iconCol)),
+      h("div", { fontFamily: "Display", fontWeight: 600, fontSize: isStory ? 64 : 54, color: fg, letterSpacing: -1 }, label)));
+  });
+  return h("div", { width: W, height: H, background: dark ? C.paper : C.cobalt, flexDirection: "column", padding: isStory ? "250px 96px 300px" : "90px 90px 90px", justifyContent: "space-between" },
+    brand(dark),
+    h("div", { flexDirection: "column", gap: isStory ? 70 : 44, width: W },
+      h("div", { flexDirection: "column", gap: isStory ? 34 : 24 },
+        pill(kicker),
+        h("div", { fontFamily: "Display", fontWeight: 800, fontSize: isStory ? 112 : 92, lineHeight: 1.0, color: fg, letterSpacing: -3 }, title)),
+      h("div", { flexDirection: "column" }, rows)),
+    h("div", { width: W, fontFamily: "Body", fontWeight: 700, fontSize: 36, color: dark ? C.cobalt : "rgba(255,255,255,0.9)" }, isStory ? "sublet-madrid.netlify.app" : "Link in bio"));
+}
+
 // Highlight cover: Instagram crops the centre into a circle, so the icon is centred.
 const icons = {
   how: "M9 9h14M9 16h14M9 23h9",
@@ -140,6 +179,12 @@ const items = {
   "story-looking-simple": simple({ kicker: "Looking", theme: "paper", title: "Looking for a room?", points: ["Rooms from students", "Good prices", "Good roommates", "Flexible dates"] }),
   "feed-offering-simple": simple({ kicker: "Offering", title: "Offering your room?", points: ["Add your dates", "Students only", "Address after they apply", "You choose"], format: "feed" }),
   "feed-looking-simple": simple({ kicker: "Looking", theme: "paper", title: "Looking for a room?", points: ["Rooms from students", "Good prices", "Good roommates", "Flexible dates"], format: "feed" }),
+  "story-offering-flow": flow({ kicker: "Offering", title: "Offering your room?", theme: "cobalt", format: "story", steps: [["calendar", "Add your dates"], ["cap", "Students only"], ["lock", "Address stays hidden"], ["choose", "You choose"]] }),
+  "feed-offering-flow": flow({ kicker: "Offering", title: "Offering your room?", theme: "cobalt", format: "feed", steps: [["calendar", "Add your dates"], ["cap", "Students only"], ["lock", "Address stays hidden"], ["choose", "You choose"]] }),
+  "story-looking-flow": flow({ kicker: "Looking", title: "Looking for a room?", theme: "paper", format: "story", steps: [["cap", "Rooms from students"], ["euro", "Good prices"], ["people", "Good roommates"], ["calendar", "Flexible dates"]] }),
+  "feed-looking-flow": flow({ kicker: "Looking", title: "Looking for a room?", theme: "paper", format: "feed", steps: [["cap", "Rooms from students"], ["euro", "Good prices"], ["people", "Good roommates"], ["calendar", "Flexible dates"]] }),
+  "story-trust-flow": flow({ kicker: "Trust", title: "Safe and discreet", theme: "cobalt", format: "story", steps: [["shield", "Every room checked"], ["lock", "Private address"], ["eyeoff", "Details kept private"], ["house", "Everything through us"]] }),
+  "feed-trust-flow": flow({ kicker: "Trust", title: "Safe and discreet", theme: "cobalt", format: "feed", steps: [["shield", "Every room checked"], ["lock", "Private address"], ["eyeoff", "Details kept private"], ["house", "Everything through us"]] }),
   // covers
   "cover-how": cover("how"),
   "cover-looking": cover("looking"),
