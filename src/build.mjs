@@ -74,6 +74,25 @@ function feedLogo() {
     h("div", { fontFamily: "Body", fontWeight: 700, fontSize: 44, color: "#2a1a00" }, "Student sublets in Madrid"));
 }
 
+
+// Simple version (feedback 16/11: less text): title + 4 short points
+function simple({ kicker, title, points, theme = "cobalt", format = "story" }) {
+  const dark = theme === "paper";
+  const fg = dark ? C.deep : C.white;
+  const isStory = format === "story";
+  const W = isStory ? 888 : 900, H = isStory ? 1370 : 1170;
+  return h("div", { width: W, height: H, background: dark ? C.paper : C.cobalt, flexDirection: "column", padding: isStory ? "250px 96px 300px" : "90px 90px 90px", justifyContent: "space-between" },
+    brand(dark),
+    h("div", { flexDirection: "column", gap: isStory ? 64 : 48, width: W },
+      pill(kicker),
+      h("div", { fontFamily: "Display", fontWeight: 800, fontSize: isStory ? 124 : 116, lineHeight: 1.0, color: fg, letterSpacing: -3 }, title),
+      h("div", { flexDirection: "column", gap: isStory ? 34 : 26 },
+        points.map((t) => h("div", { alignItems: "center", gap: 30 },
+          h("div", { width: 26, height: 26, borderRadius: 999, background: C.ochre, flexShrink: 0 }),
+          h("div", { fontFamily: "Body", fontWeight: 700, fontSize: isStory ? 62 : 56, color: fg }, t))))),
+    h("div", { width: W, fontFamily: "Body", fontWeight: 700, fontSize: isStory ? 38 : 36, color: dark ? C.cobalt : "rgba(255,255,255,0.9)" }, isStory ? "sublet-madrid.netlify.app" : "Link in bio"));
+}
+
 // Highlight cover: Instagram crops the centre into a circle, so the icon is centred.
 const icons = {
   how: "M9 9h14M9 16h14M9 23h9",
@@ -117,6 +136,10 @@ const items = {
   "feed-fee": feed({ kicker: "Offering", title: "We take 15% of the rent", body: "We find a student for your exact dates, check them and handle everything between you." }),
   "feed-checked": feed({ kicker: "Looking", theme: "paper", title: "Only places we've seen", body: "Every room on the map has been checked on video. You only get places that fit your dates." }),
   "feed-january": feed({ title: "Leaving or arriving in January?", body: "Tell us your dates in 30 seconds. We match students who leave with students who arrive." }),
+  "story-offering-simple": simple({ kicker: "Offering", title: "Offering your room?", points: ["Add your dates", "Students only", "Address only after they apply", "You choose"] }),
+  "story-looking-simple": simple({ kicker: "Looking", theme: "paper", title: "Looking for a room?", points: ["Rooms from students", "Good prices", "Good roommates", "Flexible dates"] }),
+  "feed-offering-simple": simple({ kicker: "Offering", title: "Offering your room?", points: ["Add your dates", "Students only", "Address only after they apply", "You choose"], format: "feed" }),
+  "feed-looking-simple": simple({ kicker: "Looking", theme: "paper", title: "Looking for a room?", points: ["Rooms from students", "Good prices", "Good roommates", "Flexible dates"], format: "feed" }),
   // covers
   "cover-how": cover("how"),
   "cover-looking": cover("looking"),
