@@ -136,9 +136,9 @@ const items = {
   "feed-fee": feed({ kicker: "Offering", title: "We take 15% of the rent", body: "We find a student for your exact dates, check them and handle everything between you." }),
   "feed-checked": feed({ kicker: "Looking", theme: "paper", title: "Only places we've seen", body: "Every room on the map has been checked on video. You only get places that fit your dates." }),
   "feed-january": feed({ title: "Leaving or arriving in January?", body: "Tell us your dates in 30 seconds. We match students who leave with students who arrive." }),
-  "story-offering-simple": simple({ kicker: "Offering", title: "Offering your room?", points: ["Add your dates", "Students only", "Address only after they apply", "You choose"] }),
+  "story-offering-simple": simple({ kicker: "Offering", title: "Offering your room?", points: ["Add your dates", "Students only", "Address after they apply", "You choose"] }),
   "story-looking-simple": simple({ kicker: "Looking", theme: "paper", title: "Looking for a room?", points: ["Rooms from students", "Good prices", "Good roommates", "Flexible dates"] }),
-  "feed-offering-simple": simple({ kicker: "Offering", title: "Offering your room?", points: ["Add your dates", "Students only", "Address only after they apply", "You choose"], format: "feed" }),
+  "feed-offering-simple": simple({ kicker: "Offering", title: "Offering your room?", points: ["Add your dates", "Students only", "Address after they apply", "You choose"], format: "feed" }),
   "feed-looking-simple": simple({ kicker: "Looking", theme: "paper", title: "Looking for a room?", points: ["Rooms from students", "Good prices", "Good roommates", "Flexible dates"], format: "feed" }),
   // covers
   "cover-how": cover("how"),
