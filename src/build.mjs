@@ -94,6 +94,10 @@ const items = {
   "story-safety-1": story({ kicker: "Safety", title: "Never send money before the video call", big: 108, body: "We check every place and every person. If anyone asks for a deposit before you've talked on video, tell us." }),
   // highlight: Contact
   "story-contact-1": story({ kicker: "Questions?", theme: "paper", title: "Send us a message", body: "WhatsApp +33 7 69 04 97 18\nor DM @sublet.madrid", footer: "sublet-madrid.netlify.app" }),
+  // added 16/11: rules and fee
+  "story-looking-3": story({ kicker: "Looking", title: "Everything goes through us", body: "We meet you in person or talk on WhatsApp, and we handle every step with the owner.", footer: "sublet-madrid.netlify.app" }),
+  "story-offering-3": story({ kicker: "Offering", title: "We take 15% of the rent", body: "We find a student for your dates, check them and handle everything between you.", footer: "sublet-madrid.netlify.app" }),
+  "story-safety-2": story({ kicker: "Safety", theme: "paper", title: "Always go through us", body: "Every message, visit and deal goes through Sublet Madrid. If anyone asks you to go around us, tell us.", footer: "sublet-madrid.netlify.app" }),
   // feed
   "feed-intro": feed({ title: "Student sublets in Madrid", body: "Rooms and flats for a semester or a summer. Every place checked on video." }),
   "feed-looking": feed({ kicker: "Looking", title: "Looking for a room in Madrid?", body: "Tell us your dates and budget. We message you when a checked place fits.", theme: "paper" }),
