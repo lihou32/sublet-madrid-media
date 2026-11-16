@@ -1,0 +1,12 @@
+{
+  "name": "sublet-madrid-media",
+  "private": true,
+  "scripts": { "build": "node build.mjs" },
+  "dependencies": {
+    "@fontsource/bricolage-grotesque": "5.3.0",
+    "@fontsource/figtree": "5.3.0",
+    "@resvg/resvg-js": "2.6.2",
+    "jpeg-js": "0.4.4",
+    "satori": "0.63.2"
+  }
+}
