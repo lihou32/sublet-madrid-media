@@ -105,6 +105,8 @@ const ICONS = {
   shield: "M12 3l8 3v6c0 5-3.5 8-8 9c-4.5-1-8-4-8-9V6zM8.5 12l2.5 2.5l4.5-5",
   eyeoff: "M3 12s3.5-6 9-6s9 6 9 6s-3.5 6-9 6s-9-6-9-6zM12 9.5a2.5 2.5 0 1 1 0 5a2.5 2.5 0 0 1 0-5zM4 4l16 16",
   house: "M4 11l8-6 8 6M6 10v10h12V10",
+  briefcase: "M4 8h16v11H4zM9 8V5h6v3M4 13h16",
+  sun: "M12 7a5 5 0 1 0 0 10a5 5 0 0 0 0-10zM12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4",
 };
 const icon = (name, size, color) => ({ type: "svg", props: { width: size, height: size, viewBox: "0 0 24 24", children: [{ type: "path", props: { d: ICONS[name], fill: "none", stroke: color, "stroke-width": 2, "stroke-linecap": "round", "stroke-linejoin": "round" } }] } });
 function flow({ kicker, title, steps, theme = "cobalt", format = "story" }) {
@@ -185,6 +187,9 @@ const items = {
   "feed-looking-flow": flow({ kicker: "Looking", title: "Looking for a room?", theme: "paper", format: "feed", steps: [["cap", "Rooms from students"], ["euro", "Good prices"], ["people", "Good roommates"], ["calendar", "Flexible dates"]] }),
   "story-trust-flow": flow({ kicker: "Trust", title: "Safe and discreet", theme: "cobalt", format: "story", steps: [["shield", "Every room checked"], ["lock", "Private address"], ["eyeoff", "Details kept private"], ["house", "Everything through us"]] }),
   "feed-trust-flow": flow({ kicker: "Trust", title: "Safe and discreet", theme: "cobalt", format: "feed", steps: [["shield", "Every room checked"], ["lock", "Private address"], ["eyeoff", "Details kept private"], ["house", "Everything through us"]] }),
+  "feed-how-flow": flow({ kicker: "How it works", title: "Four steps", theme: "paper", format: "feed", steps: [["calendar", "Send your dates"], ["shield", "We check every room"], ["people", "We match you"], ["house", "Move in"]] }),
+  "feed-who-flow": flow({ kicker: "For students", title: "Who is it for?", theme: "cobalt", format: "feed", steps: [["cap", "Exchange students"], ["briefcase", "Interns"], ["sun", "Summer stays"], ["calendar", "A semester or a few weeks"]] }),
+  "feed-january-flow": flow({ kicker: "Offering", title: "Leaving in January?", theme: "paper", format: "feed", steps: [["calendar", "Send your dates"], ["cap", "We find a student"], ["lock", "Address stays hidden"], ["euro", "Earn while you're away"]] }),
   // covers
   "cover-how": cover("how"),
   "cover-looking": cover("looking"),
