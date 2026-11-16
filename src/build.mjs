@@ -65,6 +65,15 @@ function feed({ kicker, title, body, theme = "cobalt", footer }) {
     h("div", { width: 900, fontFamily: "Body", fontWeight: 700, fontSize: 36, color: dark ? C.cobalt : "rgba(255,255,255,0.9)" }, footer || "Link in bio · sublet-madrid.netlify.app"));
 }
 
+
+// Grid centre tile: logo on ochre
+function feedLogo() {
+  return h("div", { width: 1080, height: 1350, background: C.ochre, flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 48 },
+    houseSvg(300, C.white, C.cobalt),
+    h("div", { fontFamily: "Display", fontWeight: 800, fontSize: 110, color: C.deep, letterSpacing: -3 }, "sublet.madrid"),
+    h("div", { fontFamily: "Body", fontWeight: 700, fontSize: 44, color: "#2a1a00" }, "Student sublets in Madrid"));
+}
+
 // Highlight cover: Instagram crops the centre into a circle, so the icon is centred.
 const icons = {
   how: "M9 9h14M9 16h14M9 23h9",
@@ -102,6 +111,12 @@ const items = {
   "feed-intro": feed({ title: "Student sublets in Madrid", body: "Rooms and flats for a semester or a summer. Every place checked on video." }),
   "feed-looking": feed({ kicker: "Looking", title: "Looking for a room in Madrid?", body: "Tell us your dates and budget. We message you when a checked place fits.", theme: "paper" }),
   "feed-offering": feed({ kicker: "Offering", title: "Offering your room?", body: "Leaving Madrid? We find a student for your exact dates. Your address stays private." }),
+  "feed-how": feed({ kicker: "How it works", theme: "paper", title: "Three steps, that's it", body: "1. Tell us your dates and budget\n2. We check every place and every person\n3. You see the zone, the address comes once it's a match" }),
+  "feed-logo": feedLogo(),
+  "feed-safety": feed({ kicker: "Safety", theme: "paper", title: "Always go through us", body: "Every message, visit and deal goes through Sublet Madrid. Never send money before the video call." }),
+  "feed-fee": feed({ kicker: "Offering", title: "We take 15% of the rent", body: "We find a student for your exact dates, check them and handle everything between you." }),
+  "feed-checked": feed({ kicker: "Looking", theme: "paper", title: "Only places we've seen", body: "Every room on the map has been checked on video. You only get places that fit your dates." }),
+  "feed-january": feed({ title: "Leaving or arriving in January?", body: "Tell us your dates in 30 seconds. We match students who leave with students who arrive." }),
   // covers
   "cover-how": cover("how"),
   "cover-looking": cover("looking"),
