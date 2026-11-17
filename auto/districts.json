@@ -1,0 +1,23 @@
+{
+  "madrid": [
+    { "name": "Centro", "c": [-3.7035, 40.418] },
+    { "name": "Chamberí", "c": [-3.702, 40.4375] },
+    { "name": "Salamanca", "c": [-3.6785, 40.4305] },
+    { "name": "Retiro", "c": [-3.678, 40.411] },
+    { "name": "Arganzuela", "c": [-3.699, 40.3975] },
+    { "name": "Moncloa", "c": [-3.722, 40.434] },
+    { "name": "Tetuán", "c": [-3.7, 40.458] },
+    { "name": "Chamartín", "c": [-3.68, 40.458] }
+  ],
+  "london": [
+    { "name": "Camden", "c": [-0.1426, 51.54] },
+    { "name": "Bloomsbury & King's Cross", "c": [-0.124, 51.526] },
+    { "name": "Marylebone", "c": [-0.154, 51.521] },
+    { "name": "Kensington & Chelsea", "c": [-0.18, 51.493] },
+    { "name": "Islington", "c": [-0.105, 51.538] },
+    { "name": "Shoreditch & Hackney", "c": [-0.079, 51.53] },
+    { "name": "South Bank", "c": [-0.105, 51.5025] },
+    { "name": "Whitechapel", "c": [-0.066, 51.5175] },
+    { "name": "Hammersmith & Fulham", "c": [-0.212, 51.488] }
+  ]
+}
