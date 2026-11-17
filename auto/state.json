@@ -1,4 +1,16 @@
 {
-  "seen": ["LON-U7FV", "LON-DK9D", "MAD-PAVB", "MAD-QZYE"],
-  "history": []
+  "seen": [
+    "LON-U7FV",
+    "LON-DK9D",
+    "MAD-PAVB",
+    "MAD-QZYE"
+  ],
+  "history": [
+    {
+      "date": "2026-11-17",
+      "key": "looking-london",
+      "city": "london",
+      "file": "ig/auto/2026-11-17-looking-london.jpg"
+    }
+  ]
 }
