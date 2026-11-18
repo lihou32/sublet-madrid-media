@@ -11,6 +11,12 @@
       "key": "looking-london",
       "city": "london",
       "file": "ig/auto/2026-11-17-looking-london.jpg"
+    },
+    {
+      "date": "2026-11-18",
+      "key": "leaving-january",
+      "city": "both",
+      "file": "ig/auto/2026-11-18-leaving-january.jpg"
     }
   ]
 }
