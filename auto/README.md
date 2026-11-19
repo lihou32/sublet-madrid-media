@@ -9,11 +9,16 @@ Une story Instagram par jour, choisie et dessinée par `src/auto.mjs`, publiée 
 1. Lit les logements en ligne sur le site (`https://flatmatch.uk/api/listings`, route publique : identifiant, ville et point flouté, rien d'autre).
 2. **Nouveau logement** (identifiant absent de `auto/state.json`) : une story « New place in Madrid / London » par ville concernée, avec le quartier le plus proche du point flouté (`auto/districts.json`). Jamais de prix, de dates, de photo ni d'adresse : le site ne les montre qu'aux personnes inscrites.
 3. **Sinon** : le thème de `auto/themes.json` utilisé il y a le plus longtemps (jamais utilisé = en premier, dans l'ordre du fichier). `months` limite un thème à certains mois, `minLive` à un nombre minimum de logements en ligne.
+   Les thèmes `available-madrid` et `available-london` (modèle `available`) sont dans cette rotation : « Available now · 2 places in Madrid », avec le nombre réel de logements en ligne dans la ville et leurs quartiers. Ils sont sautés tant que la ville n'a aucun logement en ligne.
 4. Dessine l'image (1080 × 1920, JPEG) dans `ig/auto/<date>-<thème>.jpg`, écrit `auto/pending.json` et affiche le plan : pour chaque story `file`, `url`, `link` (autocollant lien) et `altText`.
 
 Si une story est déjà enregistrée pour la date du jour, `stories` est vide (`reason: already published today`) : ne rien publier.
 
 `node auto.mjs confirm` : à lancer **après** la publication. Ajoute les stories à l'historique et les logements à la liste des logements connus, puis supprime `pending.json`.
+
+`node auto.mjs available` : à la demande, dessine tout de suite la story « Available now » de chaque ville qui a des logements en ligne (même suite : regarder, pousser, publier, `confirm`). Compte comme la story du jour.
+
+**À la une.** Ni Buffer ni l'API d'Instagram ne savent ranger une story dans « À la une » : c'est à faire à la main dans l'application (ouvrir la story, « À la une », album « Available »). Couverture de l'album : `ig/cover-available.jpg`. Quand une nouvelle story « Available now » sort, l'ajouter à l'album et en retirer l'ancienne de la même ville, sinon l'album affiche des chiffres périmés.
 
 `node auto.mjs preview` : dessine tous les thèmes dans `auto/preview/` pour les regarder (jamais publié, jamais commité).
 

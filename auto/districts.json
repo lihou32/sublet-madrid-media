@@ -7,7 +7,8 @@
     { "name": "Arganzuela", "c": [-3.699, 40.3975] },
     { "name": "Moncloa", "c": [-3.722, 40.434] },
     { "name": "Tetuán", "c": [-3.7, 40.458] },
-    { "name": "Chamartín", "c": [-3.68, 40.458] }
+    { "name": "Chamartín", "c": [-3.68, 40.458] },
+    { "name": "Segovia", "c": [-4.121, 40.9495] }
   ],
   "london": [
     { "name": "Camden", "c": [-0.1426, 51.54] },

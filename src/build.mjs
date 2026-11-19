@@ -141,6 +141,7 @@ const icons = {
   offering: "M7 15l9-7 9 7M9 14v10h14V14",
   safety: "M16 5l10 4v7c0 6-4.5 9.5-10 11c-5.5-1.5-10-5-10-11V9zM11.5 16l3.2 3.2l6-6.4",
   contact: "M6 8h20v13H13l-6 5v-5H6z",
+  available: "M16 27s-8-7-8-13.5a8 8 0 0 1 16 0C24 20 16 27 16 27zM16 10.5a3 3 0 1 0 0 6a3 3 0 0 0 0-6z",
 };
 function cover(key) {
   return h("div", { width: 1080, height: 1920, background: C.cobalt, alignItems: "center", justifyContent: "center" },
@@ -196,6 +197,7 @@ const items = {
   "cover-offering": cover("offering"),
   "cover-safety": cover("safety"),
   "cover-contact": cover("contact"),
+  "cover-available": cover("available"),
 };
 
 fs.mkdirSync("public", { recursive: true });

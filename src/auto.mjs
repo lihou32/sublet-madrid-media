@@ -2,6 +2,7 @@
 //
 //   node auto.mjs next [--date YYYY-MM-DD] [--force]   choose today's story (or stories), draw them into ../ig/auto/,
 //                                                      write ../auto/pending.json and print the plan as JSON
+//   node auto.mjs available [--date YYYY-MM-DD]        draw "Available now" for each city that has places on the map (on request)
 //   node auto.mjs confirm                              after the stories are published: move pending.json into state.json
 //   node auto.mjs preview                              draw every theme into ../auto/preview/ (never published)
 //
@@ -128,10 +129,30 @@ function newSpec(city, items, colour) {
     title: n === 1 ? `New place in ${CITY_NAME[city]}` : `${n} new places in ${CITY_NAME[city]}`,
     lines: [where, "Students only, 1 week to 6 months"].filter(Boolean), footer: "Tap the link to see it", link: SITE[city], ids: items.map((x) => x.id) };
 }
+// what is on the map right now in one city: how many places and in which areas, nothing else
+function availSpec(city, items, colour) {
+  const n = items.length, names = [...new Set(items.map((x) => x.district).filter(Boolean))];
+  const more = names.length > 2 || (names.length > 0 && items.some((x) => !x.district));
+  const where = names.length ? names.slice(0, 2).join(" · ") + (more ? " and more" : "") : null;
+  return { key: "available-" + city, city, template: "announce", theme: colour, kicker: "Available now",
+    title: `${n} ${n === 1 ? "place" : "places"} in ${CITY_NAME[city]}`,
+    lines: [where, "Students only, 1 week to 6 months"].filter(Boolean), footer: n === 1 ? "Tap the link to see it" : "Tap the link to see them", link: SITE[city] };
+}
+const today = () => { const d = opt("date") || new Date().toLocaleDateString("en-CA", { timeZone: "Europe/Madrid" }); if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) throw new Error("bad date"); return d; };
+// draw the chosen stories, leave them in pending.json and print the plan
+async function emit(date, specs, got, counts, seen) {
+  const stories = [];
+  for (const s of specs) {
+    const rel = `ig/auto/${date}-${s.key}.jpg`;
+    await draw(s, P(rel));
+    stories.push({ key: s.key, city: s.city, file: rel, url: RAW + rel, link: s.link, altText: alt(s), ids: s.ids || [] });
+  }
+  fs.writeFileSync(PENDING, JSON.stringify({ date, stories, seen }, null, 2) + "\n");
+  console.log(JSON.stringify({ date, live: got.ok ? counts : null, listingsError: got.ok ? null : got.error, stories }, null, 2));
+}
 
 async function next() {
-  const date = opt("date") || new Date().toLocaleDateString("en-CA", { timeZone: "Europe/Madrid" });
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error("bad date");
+  const date = today();
   const state = readJson(STATE, { seen: [], history: [] });
   if (!flag("force") && state.history.some((x) => x.date === date)) return console.log(JSON.stringify({ date, stories: [], reason: "already published today" }, null, 2));
   const got = fetchListings(), counts = { madrid: 0, london: 0 };
@@ -143,20 +164,30 @@ async function next() {
   for (const city of ["madrid", "london"]) { const items = fresh.filter((l) => l.city === city); if (items.length) specs.push(newSpec(city, items, flip())); }
   if (!specs.length) {
     const month = Number(date.slice(5, 7)), last = (k) => { const hit = [...state.history].reverse().find((x) => x.key === k); return hit ? hit.date : ""; };
-    const usable = themes.filter((t) => (!t.months || t.months.includes(month)) && (!t.minLive || (got.ok && counts.madrid + counts.london >= t.minLive)));
+    const usable = themes.filter((t) => (!t.months || t.months.includes(month)) && (!t.minLive || (got.ok && counts.madrid + counts.london >= t.minLive))
+      && (t.template !== "available" || (got.ok && counts[t.city] > 0)));
     // the theme used longest ago; never used comes first, in the order of themes.json
     const pick = usable.map((t, i) => ({ t, i, d: last(t.key) })).sort((a, b) => (a.d < b.d ? -1 : a.d > b.d ? 1 : a.i - b.i))[0];
     if (!pick) throw new Error("no theme available");
-    specs.push(themeSpec(pick.t, counts, flip()));
+    specs.push(pick.t.template === "available"
+      ? availSpec(pick.t.city, got.list.filter((l) => l.city === pick.t.city).map((l) => ({ ...l, district: districtOf(l) })), flip())
+      : themeSpec(pick.t, counts, flip()));
   }
-  const stories = [];
-  for (const s of specs) {
-    const rel = `ig/auto/${date}-${s.key}.jpg`;
-    await draw(s, P(rel));
-    stories.push({ key: s.key, city: s.city, file: rel, url: RAW + rel, link: s.link, altText: alt(s), ids: s.ids || [] });
+  await emit(date, specs, got, counts, got.ok ? got.list.map((l) => l.id) : null);
+}
+// on request: one "Available now" story per city that has places on the map. Does not touch the list of known places.
+async function available() {
+  const date = today(), state = readJson(STATE, { seen: [], history: [] });
+  const got = fetchListings(), counts = { madrid: 0, london: 0 };
+  if (!got.ok) throw new Error("listings unavailable: " + got.error);
+  got.list.forEach((l) => counts[l.city]++);
+  let colour = state.history.length % 2 ? "paper" : "cobalt";
+  const specs = [];
+  for (const city of ["madrid", "london"]) {
+    const items = got.list.filter((l) => l.city === city).map((l) => ({ ...l, district: districtOf(l) }));
+    if (items.length) { specs.push(availSpec(city, items, colour)); colour = colour === "cobalt" ? "paper" : "cobalt"; }
   }
-  fs.writeFileSync(PENDING, JSON.stringify({ date, stories, seen: got.ok ? got.list.map((l) => l.id) : null }, null, 2) + "\n");
-  console.log(JSON.stringify({ date, live: got.ok ? counts : null, listingsError: got.ok ? null : got.error, stories }, null, 2));
+  await emit(date, specs, got, counts, null);
 }
 function confirm() {
   const p = readJson(PENDING, null);
@@ -172,13 +203,18 @@ function confirm() {
 async function preview() {
   const counts = { madrid: 2, london: 2 }, out = [];
   let i = 0;
-  for (const t of themes) { const f = P(`auto/preview/${t.key}.jpg`); await draw(themeSpec(t, counts, i++ % 2 ? "paper" : "cobalt"), f); out.push(f); }
+  const demo = { madrid: [{ district: "Centro" }, { district: "Chamberí" }], london: [{ district: "Marylebone" }, { district: null }] };
+  for (const t of themes) {
+    const f = P(`auto/preview/${t.key}.jpg`), colour = i++ % 2 ? "paper" : "cobalt";
+    await draw(t.template === "available" ? availSpec(t.city, demo[t.city], colour) : themeSpec(t, counts, colour), f); out.push(f);
+  }
   const samples = [newSpec("madrid", [{ id: "MAD-TEST", district: "Chamberí" }], "cobalt"), newSpec("london", [{ id: "LON-A", district: "Bloomsbury & King's Cross" }, { id: "LON-B", district: "Camden" }], "paper")];
   for (const s of samples) { const f = P(`auto/preview/${s.key}-${s.ids.length}.jpg`); await draw(s, f); out.push(f); }
   console.log(out.join("\n"));
 }
 
 if (cmd === "next") await next();
+else if (cmd === "available") await available();
 else if (cmd === "confirm") confirm();
 else if (cmd === "preview") await preview();
-else { console.error("usage: node auto.mjs next|confirm|preview"); process.exit(1); }
+else { console.error("usage: node auto.mjs next|available|confirm|preview"); process.exit(1); }
