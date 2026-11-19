@@ -17,6 +17,18 @@
       "key": "leaving-january",
       "city": "both",
       "file": "ig/auto/2026-11-18-leaving-january.jpg"
+    },
+    {
+      "date": "2026-11-19",
+      "key": "available-madrid",
+      "city": "madrid",
+      "file": "ig/auto/2026-11-19-available-madrid.jpg"
+    },
+    {
+      "date": "2026-11-19",
+      "key": "available-london",
+      "city": "london",
+      "file": "ig/auto/2026-11-19-available-london.jpg"
     }
   ]
 }
