@@ -18,7 +18,7 @@ Si une story est déjà enregistrée pour la date du jour, `stories` est vide (`
 
 `node auto.mjs available` : à la demande, dessine tout de suite la story « Available now » de chaque ville qui a des logements en ligne (même suite : regarder, pousser, publier, `confirm`). Compte comme la story du jour.
 
-**À la une.** Ni Buffer ni l'API d'Instagram ne savent ranger une story dans « À la une » : c'est à faire à la main dans l'application (ouvrir la story, « À la une », album « Available »). Couverture de l'album : `ig/cover-available.jpg`. Quand une nouvelle story « Available now » sort, l'ajouter à l'album et en retirer l'ancienne de la même ville, sinon l'album affiche des chiffres périmés.
+**À la une.** Ni Buffer ni l'API d'Instagram ne savent ranger une story dans « À la une » : c'est à faire à la main dans l'application. Deux albums, nommés « Madrid » et « London », couvertures `ig/cover-available-madrid.jpg` et `ig/cover-available-london.jpg` (le mot « Available » est sur la couverture, le nom de l'album donne la ville). Quand une nouvelle story « Available now » sort, l'ajouter à l'album de sa ville et en retirer l'ancienne, sinon l'album affiche un chiffre périmé.
 
 `node auto.mjs preview` : dessine tous les thèmes dans `auto/preview/` pour les regarder (jamais publié, jamais commité).
 

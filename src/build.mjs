@@ -148,6 +148,14 @@ function cover(key) {
     h("div", { width: 520, height: 520, borderRadius: 999, background: "rgba(255,255,255,0.14)", alignItems: "center", justifyContent: "center" },
       { type: "svg", props: { width: 300, height: 300, viewBox: "0 0 32 32", children: [{ type: "path", props: { d: icons[key], fill: "none", stroke: C.white, "stroke-width": 2.4, "stroke-linecap": "round", "stroke-linejoin": "round" } }] } }));
 }
+// Cover of the "Madrid" and "London" highlights that hold the "Available now" stories: pin and the word, inside the circle.
+function coverAvailable(dark) {
+  const fg = dark ? C.white : C.cobalt;
+  return h("div", { width: 1080, height: 1920, background: dark ? C.cobalt : C.paper, alignItems: "center", justifyContent: "center" },
+    h("div", { width: 620, height: 620, borderRadius: 999, background: dark ? "rgba(255,255,255,0.14)" : "rgba(35,71,181,0.10)", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 18 },
+      { type: "svg", props: { width: 230, height: 230, viewBox: "0 0 32 32", children: [{ type: "path", props: { d: icons.available, fill: "none", stroke: fg, "stroke-width": 2.4, "stroke-linecap": "round", "stroke-linejoin": "round" } }] } },
+      h("div", { fontFamily: "Display", fontWeight: 800, fontSize: 104, color: fg, letterSpacing: -2 }, "Available")));
+}
 
 const items = {
   // highlight: How it works
@@ -197,7 +205,8 @@ const items = {
   "cover-offering": cover("offering"),
   "cover-safety": cover("safety"),
   "cover-contact": cover("contact"),
-  "cover-available": cover("available"),
+  "cover-available-madrid": coverAvailable(true),
+  "cover-available-london": coverAvailable(false),
 };
 
 fs.mkdirSync("public", { recursive: true });
