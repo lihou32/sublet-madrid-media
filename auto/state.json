@@ -29,6 +29,12 @@
       "key": "available-london",
       "city": "london",
       "file": "ig/auto/2026-11-19-available-london.jpg"
+    },
+    {
+      "date": "2026-11-20",
+      "key": "how",
+      "city": "both",
+      "file": "ig/auto/2026-11-20-how.jpg"
     }
   ]
 }
