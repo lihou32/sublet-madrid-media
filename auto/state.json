@@ -41,6 +41,12 @@
       "key": "looking-madrid",
       "city": "madrid",
       "file": "ig/auto/2026-11-21-looking-madrid.jpg"
+    },
+    {
+      "date": "2026-11-22",
+      "key": "trust",
+      "city": "both",
+      "file": "ig/auto/2026-11-22-trust.jpg"
     }
   ]
 }
