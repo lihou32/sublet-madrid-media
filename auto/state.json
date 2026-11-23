@@ -47,6 +47,12 @@
       "key": "trust",
       "city": "both",
       "file": "ig/auto/2026-11-22-trust.jpg"
+    },
+    {
+      "date": "2026-11-23",
+      "key": "who",
+      "city": "both",
+      "file": "ig/auto/2026-11-23-who.jpg"
     }
   ]
 }
