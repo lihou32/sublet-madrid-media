@@ -3,7 +3,8 @@
     "LON-U7FV",
     "LON-DK9D",
     "MAD-PAVB",
-    "MAD-QZYE"
+    "MAD-QZYE",
+    "MAD-8TDG"
   ],
   "history": [
     {
@@ -53,6 +54,12 @@
       "key": "who",
       "city": "both",
       "file": "ig/auto/2026-11-23-who.jpg"
+    },
+    {
+      "date": "2026-11-24",
+      "key": "new-madrid",
+      "city": "madrid",
+      "file": "ig/auto/2026-11-24-new-madrid.jpg"
     }
   ]
 }
