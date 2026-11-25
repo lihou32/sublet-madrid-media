@@ -60,6 +60,12 @@
       "key": "new-madrid",
       "city": "madrid",
       "file": "ig/auto/2026-11-24-new-madrid.jpg"
+    },
+    {
+      "date": "2026-11-25",
+      "key": "two-cities",
+      "city": "both",
+      "file": "ig/auto/2026-11-25-two-cities.jpg"
     }
   ]
 }
