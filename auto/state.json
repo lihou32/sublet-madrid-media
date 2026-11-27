@@ -72,6 +72,12 @@
       "key": "offering",
       "city": "both",
       "file": "ig/auto/2026-11-26-offering.jpg"
+    },
+    {
+      "date": "2026-11-27",
+      "key": "contact",
+      "city": "both",
+      "file": "ig/auto/2026-11-27-contact.jpg"
     }
   ]
 }
